@@ -6,6 +6,8 @@ package petit.duc;
  */
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.apache.commons.io.FileUtils;
 
 
@@ -125,7 +127,23 @@ public class InstallAngularCLI extends OSDependentMavenGoal {
 		 * L'initialisation est donc terminée.
 		 */
 
+		// je le détruis, et le re-créée
+		try {
+			if (this.repertoireTempBuildNG5.exists()) {
+				FileUtils.forceDelete(this.repertoireTempBuildNG5);
+			}
+		} catch (IOException e2) {
+			throw new MojoFailureException(" PETIT-DUC: + Un problème est survenu à la suppression du répertoire [" + this.cheminRepertoireTempBuildNG5 + "], avant la récupération du code source du client Angular 5.", e2);
+		}
+		boolean AETECREE = this.repertoireTempBuildNG5.mkdirs();
+		String msgINFOcreationDirRepo = "";
+		if (AETECREE) {
+			msgINFOcreationDirRepo = " PETIT-DUC: + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] a été détruis et re-créé.";
+		} else {
+			msgINFOcreationDirRepo = " PETIT-DUC: + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] n'a pas été re-créé.";
+		}
 		
+		System.out.println(msgINFOcreationDirRepo );
 	}
 	
 	
@@ -136,8 +154,15 @@ public class InstallAngularCLI extends OSDependentMavenGoal {
 	}
 
 	private void installerAngularCLI() {
+		String[] listeInvocation = new String[4];
+		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
+		listeInvocation[1] = "install";
+		listeInvocation[2] = "-g";
+		listeInvocation[3] = "@angular/cli";
+		
 	    try {
-	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, "install -g @angular/cli ");
+//	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, " install -g @angular/cli ");
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
 	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
 	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
 	    	leMemeProcessBuilder.inheritIO();

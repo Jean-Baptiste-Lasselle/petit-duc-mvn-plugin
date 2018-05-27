@@ -30,6 +30,8 @@ import org.apache.maven.plugin.MojoFailureException;
 
 
 /**
+ * Attention!! : >> le numéro de version souhaité pour le code source angualr 5 à récupérer, n'estpas encore pris en cahrge dans le code du plugin maven.
+ * 
  * Ce goal a pour vocation de permettre de réaliser le build d'une application web jee, dont le client est une SPA Angular 5, le
  * code source du client Angular 5 étant versionné dans le repository Git {@see BuildAngular5#uriRepoClientNG5}.
  * 
@@ -102,6 +104,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 	 * L'URI du repo Git versionnant le code source du client Angular 5 de votre applciation Web Jee.
 	 * 
 	 */
+	@Parameter(alias = "uri-repo-client-ng5", property = "uri-repo-client-ng5", required = true)
 	private String uriRepoClientNG5;
 	
 	/**
@@ -141,7 +144,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 	 * Le paramètre est optionnel, il a une valeur par défaut qui peut être surchargée
 	 * 
 	 */
-	@Parameter(alias = "rep-mvn-jee-ng5", property = "rep-mvn-jee-ng5", defaultValue = "${project.build.directory}/petit-duc/temp-ng5-build")
+	@Parameter(alias = "rep-mvn-jee-ng5", property = "rep-mvn-jee-ng5", defaultValue = "${project.basedir}/src/main/webapp/hibou")
 	private String cheminRepertoireMvnJeeNG5;
 	/**
 	 * Le répertoire maven dans lequel le résultat du build angular 5 sera copié, pour
@@ -309,7 +312,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 			monrepogit = cloneCommand.call();
 //			monrepogit = Git.init().setDirectory(repoDIR).call();
 		} catch (IllegalStateException e) {
-			throw new MojoFailureException("  PETIT-DUC: +  LE git clone du repo [" + this.uriRepoClientNG5 + "] a échoué.", e);
+			throw new MojoFailureException("  PETIT-DUC: +  Le git clone du repo [" + this.uriRepoClientNG5 + "] a échoué.", e);
 		} catch (GitAPIException e3) {
 
 			throw new MojoFailureException(" PETIT-DUC: +  ERREUR AU GIT INIT  DANS  [" + this.cheminRepertoireTempBuildNG5 + "]", e3);
@@ -350,7 +353,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 				this.GITuserpwd = CandidateGITuserpwd;
 			}
 		}
-		this.GITuserpwd = null;
+//		this.GITuserpwd = null;
 		
 		this.repertoireTempBuildNG5 = new File(this.cheminRepertoireTempBuildNG5);
 		/**
