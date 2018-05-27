@@ -133,7 +133,8 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 Avec cette configuration, il vous est alors possible de passer en paramètre de l'exécution du build maven 
 de votre applciation web jee, le mot de passe de petit duc pour l'accès au repository Git versionnant le code source du client Angular 5:
 
-mvn clean package -Dpetit.duc.git.pwd=votremotdepasse
+
+`mvn clean package -Dpetit.duc.git.pwd=votremotdepasse`
 
 
 Si vous utilsiez l'IDE Eclipse, vous pouvez passez ce paramètre dans les "Run Configurations" Maven de votre projet app web jee.
