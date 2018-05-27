@@ -50,8 +50,8 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 						</goals>
 						<configuration>
 							<!-- L'URI du repository Git versionnant le code source de la partie cliente Angular 5 -->
-							<uri-repo-angular5>https://github.com/Jean-Baptiste-Lasselle/petit-poivre-angular5</uri-repo-angular5>
-							<no-version-client-angular5>1.0.9</no-version-client-angular5>
+							<uri-repo-client-ng5>https://github.com/Jean-Baptiste-Lasselle/petit-poivre-angular5</uri-repo-client-ng5>
+							<version-client-ng5>1.0.9</version-client-ng5>
 							<!-- Utilisateur Git utilisé par l'usine logicielle, ou le développeur -->
 							<git-username>jlasselle</git-username>
 							<!-- pas de mot de passe dans un fichier versionné, l'authentification doit se faire:
@@ -92,7 +92,7 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 				<configuration>
 					<includes>
 <!-- 						<include>%regex[.*(Cat|Dog).*Test.*]</include> -->
-						<!-- Avec cette configuration, tous les nom sont autorisés pour les classes de tests unitaires -->
+						<!-- Avec cette configuration, tous les noms sont autorisés pour les classes de tests unitaires -->
 						<include>**/*.java</include>
 					</includes>
 				</configuration>
