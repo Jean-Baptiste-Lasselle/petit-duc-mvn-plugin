@@ -206,7 +206,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		/**
 		 * 2./ On fait le build Angular 5
 		 */
-		this.faireLeBuildAngular5("");
+		this.faireLeBuildAngular5(this.ngBuildBaseHref);
 		
 		/**
 		 * 3./ On fait la copie du résultat du build, [{@see BuildAngular5#cheminRepertoireTempBuildNG5}/dist/] dans le répertoire {@see BuildAngular5#repertoireMvnJeeNG5}
@@ -271,7 +271,12 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 
 
 
-	private void recupererCodeSourceAngular5() {
+	/**
+	 * Exécute le git clone du code source de l'applciation Angular 5, dans le répertoire{@see BuildAngular5#uriRepoClientNG5 }
+	 * 
+	 * @throws MojoFailureException
+	 */
+	private void recupererCodeSourceAngular5() throws MojoFailureException {
 
 		// je le détruis, et le re-créée
 		try {
@@ -279,15 +284,14 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 				FileUtils.forceDelete(this.repertoireTempBuildNG5);
 			}
 		} catch (IOException e2) {
-			System.out.println(" PETIT-DUC + Un problème est survenu à la suppression du répertoire [" + this.cheminRepertoireTempBuildNG5 + "], avant la récupération du code source du client Angular 5.");
-			e2.printStackTrace();
+			throw new MojoFailureException(" PETIT-DUC: + Un problème est survenu à la suppression du répertoire [" + this.cheminRepertoireTempBuildNG5 + "], avant la récupération du code source du client Angular 5.", e2);
 		}
 		boolean AETECREE = this.repertoireTempBuildNG5.mkdirs();
 		String msgINFOcreationDirRepo = "";
 		if (AETECREE) {
-			msgINFOcreationDirRepo = " PETIT-DUC + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] a été détruis et re-créé.";
+			msgINFOcreationDirRepo = " PETIT-DUC: + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] a été détruis et re-créé.";
 		} else {
-			msgINFOcreationDirRepo = " PETIT-DUC + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] n'a pas été re-créé.";
+			msgINFOcreationDirRepo = " PETIT-DUC: + le Repertoire [" + this.cheminRepertoireTempBuildNG5 + "] n'a pas été re-créé.";
 		}
 		
 		System.out.println(msgINFOcreationDirRepo );
@@ -305,12 +309,10 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 			monrepogit = cloneCommand.call();
 //			monrepogit = Git.init().setDirectory(repoDIR).call();
 		} catch (IllegalStateException e) {
-			System.out.println(" PETIT-DUC + ERREUR AU GIT INIT DANS  [" + this.cheminRepertoireTempBuildNG5 + "] ");
-			e.printStackTrace();
-		} catch (GitAPIException e) {
-			System.out.println(" PETIT-DUC + ERREUR AU GIT INIT  DANS  [" + this.cheminRepertoireTempBuildNG5 + "] : ");
-			System.out.println(" PETIT-DUC + [" + e.getMessage() + "] ");
-			e.printStackTrace();
+			throw new MojoFailureException("  PETIT-DUC: +  LE git clone du repo [" + this.uriRepoClientNG5 + "] a échoué.", e);
+		} catch (GitAPIException e3) {
+
+			throw new MojoFailureException(" PETIT-DUC: +  ERREUR AU GIT INIT  DANS  [" + this.cheminRepertoireTempBuildNG5 + "]", e3);
 		}
 	}
 

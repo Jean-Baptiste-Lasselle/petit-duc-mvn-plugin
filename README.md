@@ -29,7 +29,25 @@ un homme aux 5 sens augmentés.
 
 Ce plugin suppose que NPM est déjà instalé dans le système exécutant les processus MAVEN
 
+## Builder le Petit Duc à partir de son code source
+
+Pour votre environnement local de développement:
+
+```
+mvn clean install site:site
+```
+
+Pour en plus, déployer dans le repository maven privé de votre projet:
+
+```
+mvn clean deploy site:site
+```
+
+
+
 ## Ce que permet ce plugin 
+
+
 Le contexte est le suivant.
 On développe une application web jee, avec client Angular 5. Le code source est versionné avec deux repository Git distincts:
 * Un repository Git versionne tout le code source, à l'exclusion de la partie cliente Angular 5 (exécutée dans le browser).
@@ -43,6 +61,7 @@ Ce plugin permet :
 Pour ensuite poursuivre et terminer le build du war complet, avec le reste du code source.
 
 la configuration complète de ce plugin, surchargeant toutes les valeurs par défaut, est:
+
 ```
 	<build>
 		<!-- <finalName>petit-poivre-jee</finalName> -->
@@ -111,8 +130,13 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 
 </plugins>
 ```
+Avec cette configuration, il vous est alors possible de passer en paramètre de l'exécution du build maven 
+de votre applciation web jee, le mot de passe de petit duc pour l'accès au repository Git versionnant le code source du client Angular 5:
+
+mvn clean package -Dpetit.duc.git.pwd=votremotdepasse
 
 
+Si vous utilsiez l'IDE Eclipse, vous pouvez passez ce paramètre dans les "Run Configurations" Maven de votre projet app web jee.
 
 
 

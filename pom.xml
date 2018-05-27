@@ -1,13 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>petit-duc</groupId>
+	<groupId>aramitz</groupId>
 	<artifactId>petit-duc-mvn-plugin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 	<name>petit-duc</name>
 	<description>Un plugin qui attrape les applications Angular 5 au vol, comme des petites souris. Permet d'assembler une application jee et son client angular 5, versionnés dans des repository Git distincts</description>
-
+    <url>https://github.com/Jean-Baptiste-Lasselle</url>
+    
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<source.java.version>1.8</source.java.version>

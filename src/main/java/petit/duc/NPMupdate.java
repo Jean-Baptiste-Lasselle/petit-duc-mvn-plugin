@@ -27,7 +27,7 @@ import org.apache.maven.plugin.MojoFailureException;
 
 
 /**
- * Ce goal permet d'installer Angular CLI en exécutant un simple goal maven une seule fois, sans le lier uà une phase particulière du build.
+ * Ce goal permet de faire un <code>npm update</code> dans le répertoire {@see .
  * 
  * Par défaut, il ne nécessite donc auccune configuration spécifique, car il utilise un seul paramètre de la configuration du pom.xml
  * le paramètre [<rep-temp-build-ng5></rep-temp-build-ng5>], qui a une valeur par défaut.
@@ -48,27 +48,10 @@ import org.apache.maven.plugin.MojoFailureException;
  *					<execution>
  *						<phase>initialize</phase>
  *						<goals>
- *							<goal>install-angular-cli</goal>
+ *							<goal>npm-update</goal>
  *						</goals>
  *						<configuration>
- *							<!-- L'URI du repository Git versionnant le code source de la partie cliente Angular 5 -->
- *							<uri-repo-client-ng5>https://github.com/Jean-Baptiste-Lasselle/petit-poivre-angular5</uri-repo-client-ng5>
- *							<version-client-ng5>1.0.9</version-client-ng5>
- *							<!-- Utilisateur Git utilisé par l'usine logicielle, ou le développeur -->
- *							<git-username>jlasselle</git-username>
- *							<!-- pas de mot de passe dans un fichier versionné, l'authentification doit se faire:
- *									¤ par demande interactive de mot de passe, lorsque l'option java -Dpetit.duc.git.pwd=votremotdepasse n'est pas utilisée
- *									¤ Avec l'option java -Dpetit.duc.git.pwd=votremotdepasse  dans tous les autres cas. 
- *									¤ On pourra améliorer en proposant un mécanisme de configuration de l'authentification pour supporter les mécanismes d'autentification suivants: 
- *											+ Java - usePAM   + free ipa server
- *											+ Java -> PKI Certificats SSL TLS + Lets Encrypt + free ipa server   
- *											+ OAUTH2 / saml Keycloak free ipa server   
- *											+ json web token / jwt server + free ipa server
- *							-->
- *							<!-- git-user-pwd>xxxx</git-user-pwd -->
- *							<!-- rep-temp-build-ng5></rep-temp-build-ng5 -->
- *
- * 
+ *							<rep-temp-build-ng5>${project.build.directory}/mon/repertoire</rep-temp-build-ng5>
  *
  *						</configuration>
  *					</execution>
@@ -93,8 +76,8 @@ import org.apache.maven.plugin.MojoFailureException;
  * @author Jean-Baptiste Lasselle
  *
  */
-@Mojo( name = "install-angular-cli")
-public class InstallAngularCLI extends OSDependentMavenGoal {
+@Mojo( name = "npm-update")
+public class NPMupdate extends OSDependentMavenGoal {
 
 	/**
 	 * <rep-temp-build-ng5></rep-temp-build-ng5>
@@ -132,19 +115,25 @@ public class InstallAngularCLI extends OSDependentMavenGoal {
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		this.initialiser();
-		this.installerAngularCLI();
+		this.npmUpdate();
 	}
 
-	private void installerAngularCLI() {
+	/**
+	 * Exécute la commande <code>npm update</code>
+	 * @throws MojoFailureException Lorsque la commande <code>npm update</code> échoue.
+	 */
+	private void npmUpdate() throws MojoFailureException {
 	    try {
-	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, "install -g @angular/cli ");
+	    	
+	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, "update");
 	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
 	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
 	    	leMemeProcessBuilder.inheritIO();
-	    	Process processNpmInstall = leMemeProcessBuilder.start();
+	    	Process processNpmUpdate = leMemeProcessBuilder.start();
+	    	
+	    	
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new MojoFailureException(" PETIT-DUC: La commande [npm update] a échoué. " + e);
 		}
 		
 	}
