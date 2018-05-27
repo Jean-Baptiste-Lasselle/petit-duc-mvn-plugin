@@ -161,19 +161,38 @@ public class InstallAngularCLI extends OSDependentMavenGoal {
 		listeInvocation[3] = "@angular/cli";
 		
 	    try {
-//	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, " install -g @angular/cli ");
 	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
 	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
 	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
 	    	leMemeProcessBuilder.inheritIO();
 	    	Process processNpmInstall = leMemeProcessBuilder.start();
+	    	processNpmInstall.waitFor();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+		finally   {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CLI SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+		}
 	}
 
+	
+	
 
 	
 	

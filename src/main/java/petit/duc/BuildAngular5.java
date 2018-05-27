@@ -214,6 +214,8 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		/**
 		 * 3./ On fait la copie du résultat du build, [{@see BuildAngular5#cheminRepertoireTempBuildNG5}/dist/] dans le répertoire {@see BuildAngular5#repertoireMvnJeeNG5}
 		 */
+		this.installerDependancesNPM();
+		
 		this.embarquerClientAngular5();
 	}
 
@@ -228,9 +230,9 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 	 */
 	private void embarquerClientAngular5() throws MojoFailureException {
 //		throw new MojoFailureException("la méthode {@see BuildAngular5#embarquerClientAngular5() } n'a pas encore été implémentée");
-		
+		File repertoireDist = new File(this.cheminRepertoireTempBuildNG5 + "/dist/");
 		try {
-			org.apache.commons.io.FileUtils.copyDirectoryToDirectory(this.repertoireTempBuildNG5, this.repertoireMvnJeeNG5);
+			org.apache.commons.io.FileUtils.copyDirectoryToDirectory(repertoireDist, this.repertoireMvnJeeNG5);
 		} catch (IOException e) {
 			StringBuilder msgErr = new StringBuilder();
 			String sautDeLigne = System.getProperty("line.separator");
@@ -246,6 +248,33 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		
 	}
 
+	
+	/**
+	 * J'ai vérifié qu'il faut absolument faire un "npm install" , après avoir fait le "npm install -g  @angular/cli", pour
+	 * pouvoir faire des commandes "ng-build ensuite".
+	 * 
+	 */
+	private void installerDependancesNPM() {
+		String[] listeInvocation = new String[2];
+		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
+		listeInvocation[1] = "install";
+		
+	    try {
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
+	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
+	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
+	    	leMemeProcessBuilder.inheritIO();
+	    	Process processNpmInstall = leMemeProcessBuilder.start();
+	    	processNpmInstall.waitFor();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	/**
 	 * Réalise la commande :
@@ -259,13 +288,30 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 	 * @param valeurBaseHref
 	 */
 	private void faireLeBuildAngular5(String valeurBaseHref) {
+		
+		String[] listeInvocation = new String[4];
+		listeInvocation[0] = COMMANDE_NG_SPECIFIQUE_OS;
+		listeInvocation[1] = "build";
+		listeInvocation[2] = "--prod";
+		listeInvocation[3] = "--base-href=\"" + valeurBaseHref + "\"";
 	    try {
 //	    	Process process = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, optsEtAgumentsNPM).directory(this.repertoireTempBuildNG5).start();
-	    	Process process = new ProcessBuilder("ng", "build --prod --base-href=\"" + valeurBaseHref + "\"").directory(this.repertoireTempBuildNG5).start();
-			
+	
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
+	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
+	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
+	    	leMemeProcessBuilder.inheritIO();
+	    	Process processNGbuild = leMemeProcessBuilder.start();
+	    	processNGbuild.waitFor();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally   {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE BUILD DU CLIENT ANGULAR 5 EST EN COURS... " );
+			
 		}
 		
 	}
@@ -304,8 +350,9 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		Git monrepogit = null;
 		// GIT INIT // NON, UN GIT CLONE AU DEPART
 		String URLduREPO = this.uriRepoClientNG5;
+		CloneCommand cloneCommand = null;
 		try {
-			CloneCommand cloneCommand = Git.cloneRepository();
+			cloneCommand = Git.cloneRepository();
 			cloneCommand.setDirectory(this.repertoireTempBuildNG5);
 			cloneCommand.setURI(URLduREPO);
 			cloneCommand.setCredentialsProvider( new UsernamePasswordCredentialsProvider( this.GITusername, this.GITuserpwd ) );
@@ -316,7 +363,21 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		} catch (GitAPIException e3) {
 
 			throw new MojoFailureException(" PETIT-DUC: +  ERREUR AU GIT INIT  DANS  [" + this.cheminRepertoireTempBuildNG5 + "]", e3);
+		} finally {
+			monrepogit.close();
+			/**
+			 * Enfin, je fais d'emblée une chose: supprimer le répertoire ".git/", pour ne pas avori de blocage I/O avec eclipse, et ne pas copier ce "./git/" dans le répertoire [src/main/webapp/hibou/]
+			 */
+			File repertoirePointGit = new File(this.cheminRepertoireTempBuildNG5 + "/.git/");
+			try {
+				FileUtils.forceDelete(repertoirePointGit);
+			} catch (IOException e5) {
+				throw new MojoFailureException(" PETIT-DUC: + Un problème est survenu à la suppression du répertoire [" + repertoirePointGit + "], avant l'exécution du build du client angular 5.", e5);
+			}
 		}
+		
+		
+
 	}
 
 	/**

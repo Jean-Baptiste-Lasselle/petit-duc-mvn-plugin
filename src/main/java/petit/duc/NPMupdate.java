@@ -123,18 +123,37 @@ public class NPMupdate extends OSDependentMavenGoal {
 	 * @throws MojoFailureException Lorsque la commande <code>npm update</code> échoue.
 	 */
 	private void npmUpdate() throws MojoFailureException {
+		String[] listeInvocation = new String[2];
+		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
+		listeInvocation[1] = "update";
 	    try {
 	    	
-	    	ProcessBuilder processBuilder = new ProcessBuilder(COMMANDE_NPM_SPECIFIQUE_OS, "update");
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
 	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
 	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
 	    	leMemeProcessBuilder.inheritIO();
 	    	Process processNpmUpdate = leMemeProcessBuilder.start();
-	    	
+	    	processNpmUpdate.waitFor();
 	    	
 		} catch (IOException e) {
 			throw new MojoFailureException(" PETIT-DUC: La commande [npm update] a échoué. " + e);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> LE  [npm update]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
 		}
+		
 		
 	}
 

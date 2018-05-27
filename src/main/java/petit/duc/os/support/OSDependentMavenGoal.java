@@ -21,6 +21,12 @@ public abstract class OSDependentMavenGoal  extends AbstractMojo {
 	 * Permet de définir la commande à exécuter pour invoquer NPM, spécifiquement à l'OS sous jacent
 	 */
 	public static final String COMMANDE_NPM_SPECIFIQUE_OS = isWindows() ? "npm.cmd" : "npm";
+	
+	/**
+	 * Permet de définir la commande à exécuter pour invoquer angular-cli ("ng"), spécifiquement à l'OS sous jacent
+	 */
+	public static final String COMMANDE_NG_SPECIFIQUE_OS = isWindows() ? "ng.cmd" : "ng";
+	
 
 
 /**

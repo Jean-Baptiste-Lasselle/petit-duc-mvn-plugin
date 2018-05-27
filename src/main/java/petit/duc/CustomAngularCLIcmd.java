@@ -153,14 +153,41 @@ public class CustomAngularCLIcmd extends AbstractMojo {
 	 * @throws MojoFailureException Lors que la commande Angular CLI échoue.
 	 */
 	private void executerCommandeAngularCLI() throws MojoFailureException {
+		String[] argsEtOpts = this.ngCmdOptsArgs.split(" ");
+		int nbOptsArgs = argsEtOpts.length;
+		String[] listeInvocation = new String[nbOptsArgs+ 1];
+		listeInvocation[0] = "ng"; // le premier est la commande ng
+		// pour les nbOptsArgs suivants, on met ceux du tableau argsEtOpts
+		for (int i = 0; i < nbOptsArgs; i++) {
+			listeInvocation[i + 1] = argsEtOpts[i];
+		}
+		// ça pue la IndexOutOfArrayException....
 	    try {
-	    	ProcessBuilder processBuilder =  new ProcessBuilder("ng", this.ngCmdOptsArgs);
+	    	ProcessBuilder processBuilder =  new ProcessBuilder(listeInvocation);
 	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireExecNGcmd);
 	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
 	    	leMemeProcessBuilder.inheritIO();
 	    	Process processsOScommandeAngularCLI = leMemeProcessBuilder.start();
+	    	processsOScommandeAngularCLI.waitFor();
 		} catch (IOException e) {
 			throw new MojoFailureException(" PETIT-DUC: La commande Angular CLI [ng " + this.ngCmdOptsArgs + "] a échoué. " + e);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> La commande Angular CLI [ng " + this.ngCmdOptsArgs + "]  SE FAIT DANS UN PROCESS EN TÂCHE DE FOND, APRES LE BUILD SUCCESS " );
+			
 		}
 		
 	}
