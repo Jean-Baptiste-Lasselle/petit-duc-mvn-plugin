@@ -1,3 +1,7 @@
+# System Requirements
+
+Ce plugin suppose que NPM est déjà installé au moins pour l'utilisateur linux/windows qui exécute les processus maven.
+
 # Cuisine
 
 Ce repository versionne le code source d'un plugin maven, que j'ai baptisé `petit-duc-mvn-plugin`, en 
@@ -21,6 +25,11 @@ un homme aux 5 sens augmentés.
 
 # Le Petit Duc
 
+## System Requirements 
+
+Ce plugin suppose que NPM est déjà instalé dans le système exécutant les processus MAVEN
+
+## Ce que permet ce plugin 
 Le contexte est le suivant.
 On développe une application web jee, avec client Angular 5. Le code source est versionné avec deux repository Git distincts:
 * Un repository Git versionne tout le code source, à l'exclusion de la partie cliente Angular 5 (exécutée dans le browser).
@@ -63,7 +72,8 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 											+ OAUTH2 / saml Keycloak free ipa server   
 											+ json web token / jwt server + free ipa server
 							-->
-
+							<!-- la valeur qui sera donnée à l'option [--base-href], piur l'exécution de la commande [ng build --prod --base-href=./protail-des-hiboux] -->
+							<ng-build-base-href>./portail-des-hiboux/</ng-build-base-href>
 
 						</configuration>
 					</execution>
