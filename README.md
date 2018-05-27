@@ -53,16 +53,16 @@ la configuration complète de ce plugin, surchargeant toutes les valeurs par dé
 							<uri-repo-client-ng5>https://github.com/Jean-Baptiste-Lasselle/petit-poivre-angular5</uri-repo-client-ng5>
 							<version-client-ng5>1.0.9</version-client-ng5>
 							<!-- Utilisateur Git utilisé par l'usine logicielle, ou le développeur -->
-							<git-username>jlasselle</git-username>
+							<git-user-name>jlasselle</git-user-name>
 							<!-- pas de mot de passe dans un fichier versionné, l'authentification doit se faire:
-									¤ par demande interactive de mot de passe, lorsque le plugin est utilisé par un développeur déclenchant manuellement le build avec son IDE. Option securestore pour "se souvenir" du mot de passe aux authentifications suivantes
-									¤ Pour l'usine logicielle, par intégration de la JRE exécutant le process maven, au système sous jacent :
+									¤ par demande interactive de mot de passe, lorsque l'option java -Dpetit.duc.git.pwd=votremotdepasse n'est pas utilisée
+									¤ Avec l'option java -Dpetit.duc.git.pwd=votremotdepasse  dans tous les autres cas. 
+									¤ On pourra améliorer en proposant un mécanisme de configuration de l'authentification pour supporter les mécanismes d'autentification suivants: 
 											+ Java - usePAM   + free ipa server
 											+ Java -> PKI Certificats SSL TLS + Lets Encrypt + free ipa server   
 											+ OAUTH2 / saml Keycloak free ipa server   
 											+ json web token / jwt server + free ipa server
 							-->
-							<!-- git-user-pwd>xxxx</git-user-pwd -->
 
 
 						</configuration>
