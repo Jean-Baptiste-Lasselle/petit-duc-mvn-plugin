@@ -209,12 +209,16 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		/**
 		 * 2./ On fait le build Angular 5
 		 */
+		this.installerAngularCore();
+		this.npmInstall();
+		this.npmUpdate();
+		System.out.println(" PETIT-DUC: + >>>>>>>>>>>>>>>>>>>>>>>>>  TETE CHERCHEUSE NULL POINTER  " );
 		this.faireLeBuildAngular5(this.ngBuildBaseHref);
 		
 		/**
 		 * 3./ On fait la copie du résultat du build, [{@see BuildAngular5#cheminRepertoireTempBuildNG5}/dist/] dans le répertoire {@see BuildAngular5#repertoireMvnJeeNG5}
 		 */
-		this.installerDependancesNPM();
+
 		
 		this.embarquerClientAngular5();
 	}
@@ -254,7 +258,7 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 	 * pouvoir faire des commandes "ng-build ensuite".
 	 * 
 	 */
-	private void installerDependancesNPM() {
+	private void npmInstall() {
 		String[] listeInvocation = new String[2];
 		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
 		listeInvocation[1] = "install";
@@ -275,7 +279,59 @@ public class BuildAngular5 extends OSDependentMavenGoal {
 		}
 
 	}
-
+	/**
+	 * Et un NPM update
+	 */
+	private void npmUpdate() {
+		String[] listeInvocation = new String[2];
+		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
+		listeInvocation[1] = "update";
+		
+	    try {
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
+	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
+	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
+	    	leMemeProcessBuilder.inheritIO();
+	    	Process processNpmInstall = leMemeProcessBuilder.start();
+	    	processNpmInstall.waitFor();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally   {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> NPM UPDATE EN COURS  " );
+		}
+	}
+	/**
+	 * Parce qu'apparrment Angular Core Manquait
+	 */
+	private void installerAngularCore() {
+		String[] listeInvocation = new String[3];
+		listeInvocation[0] = COMMANDE_NPM_SPECIFIQUE_OS;
+		listeInvocation[1] = "install";
+		listeInvocation[2] = "@angular/core";
+		
+	    try {
+	    	ProcessBuilder processBuilder = new ProcessBuilder(listeInvocation);
+	    	ProcessBuilder leMemeProcessBuilder = processBuilder.directory(this.repertoireTempBuildNG5);
+	    	// Branche automatiquement les canaux de la sortie standard et la sortie erreur du process, sur la sortie standard et le caanl de sortie d'erreurs de la JRE l'exécutant
+	    	leMemeProcessBuilder.inheritIO();
+	    	Process processNpmInstall = leMemeProcessBuilder.start();
+	    	processNpmInstall.waitFor();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally   {
+			System.out.println(" PETIT-DUC: + ATTENTION! ==>> L'INSTALLATION + ANGULAR CORE A COMMENCE " );
+		}
+	}
 	/**
 	 * Réalise la commande :
 	 * 
