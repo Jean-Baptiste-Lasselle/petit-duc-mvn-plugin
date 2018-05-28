@@ -140,7 +140,49 @@ de votre applciation web jee, le mot de passe de petit duc pour l'accès au repo
 Si vous utilsiez l'IDE Eclipse, vous pouvez passez ce paramètre dans les "Run Configurations" Maven de votre projet app web jee.
 
 
+# TODOs
 
+## Yarn
+
+Suite à une disucssion avec [Christophe Hiraga](#), à qui j'adresse mes remerciements pour celle-ci, j'appris aujourd'hui:
+
+* que Yarn peut-être définit en tant que package manager de NPM, avec la commande: ``
+
+* que cette re-définition du package manager améliore singulièrement la performance de la résolution de dépendances, et de l'exsécution des phases de build définies par (AngularCLI)() 
+
+* que yarn s'installe avec la commande: ``
+
+```
+REM SOUS WINDOWS / MS-DOS (pour postes de développeur)
+REM installation de NPM sous Windows : installation de NODEJS qui installe NPM en
+natif
+REM https://nodejs.org
+npm install –g @angular/cli
+npm install –g yarn
+ng set --global packageManager=yarn
+```
+
+```
+# LINUX  CENTOS   (serveurs CI/CD)
+# date : 28/05/2018
+# -
+# CentOS / installation NodeJS, latest LTS (v8.x) :
+# -
+curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+sudo yum -y install nodejs
+npm install –g @angular/cli
+npm install –g yarn
+ng set --global packageManager=yarn
+```
+
+
+
+
+## TODO : faire une goal maven qui permet d'exécuter n'importe quelle commande custom Yarn, comme je l'ai fait avec NPM
+
+# ANNEXE : Jgit et authentification
+
+[une référence](https://www.codeaffine.com/2014/12/09/jgit-authentication/)$
 
 
 
